@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.EnaaSkills</groupId>
-    <artifactId>validationService</artifactId>
+    <artifactId>validation-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>validationService</name>
-    <description>validationService</description>
+    <name>validation-service</name>
+    <description>validation-service</description>
     <url/>
     <licenses>
         <license/>
