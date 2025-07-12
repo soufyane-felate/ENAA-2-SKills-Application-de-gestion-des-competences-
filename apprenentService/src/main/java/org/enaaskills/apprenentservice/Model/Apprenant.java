@@ -15,10 +15,18 @@ public class Apprenant {
     private String firstName;
     private String lastName;
     private String email;
-
+    private Long renduId;
 
     public Long getId() {
         return id;
+    }
+
+    public Long getRenduId() {
+        return renduId;
+    }
+
+    public void setRenduId(Long renduId) {
+        this.renduId = renduId;
     }
 
     public void setId(Long id) {
