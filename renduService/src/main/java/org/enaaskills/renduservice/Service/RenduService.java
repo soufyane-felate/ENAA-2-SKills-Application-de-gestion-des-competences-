@@ -21,7 +21,7 @@ public class RenduService {
 
     private final String APPRENANT_SERVICE_URL = "http://localhost:8082/apprenants/";
     private final String FORMATEUR_SERVICE_URL = "http://localhost:8084/formateurs/";
-    private final String COMPETENCE_SERVICE_URL = "http://localhost:8086/competences/";
+    private final String COMPETENCE_SERVICE_URL = "http://localhost:8070/api/competences";
     private final String VALIDATION_SERVICE_URL = "http://localhost:8085/validations/";
 
     public List<Rendu> getAllRendus() {
