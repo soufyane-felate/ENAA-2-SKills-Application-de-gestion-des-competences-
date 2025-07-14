@@ -1,0 +1,113 @@
+
+version: '3.8'
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - skills-network
+
+  apprenent-service:
+    build:
+      context: ./apprenentService
+      args:
+        JAR_FILE: target/apprenentService-0.0.1-SNAPSHOT.jar
+    container_name: apprenent-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/apprenant_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - skills-network
+
+  brief-service:
+    build:
+      context: ./Brief_Service
+      args:
+        JAR_FILE: target/Brief_Service-0.0.1-SNAPSHOT.jar
+    container_name: brief-service
+    ports:
+      - "8088:8088"
+    depends_on:
+      - mysql-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/brief_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - skills-network
+
+  formateur-service:
+    build:
+      context: ./formateurService
+      args:
+        JAR_FILE: target/formateurService-0.0.1-SNAPSHOT.jar
+    container_name: formateur-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - mysql-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/formateur_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - skills-network
+
+  rendu-service:
+    build:
+      context: ./renduService
+      args:
+        JAR_FILE: target/renduService-0.0.1-SNAPSHOT.jar
+    container_name: rendu-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mysql-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/rendu_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - skills-network
+
+  validation-service:
+    build:
+      context: ./validation-service
+      args:
+        JAR_FILE: target/validation-service-0.0.1-SNAPSHOT.jar
+    container_name: validation-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - mysql-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/validation_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - skills-network
+
+networks:
+  skills-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

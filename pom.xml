@@ -19,7 +19,7 @@
     <module>validation-service</module>
     <module>formateurService</module>
     <module>renduService</module>
-    <module>competenceService</module>
+<!--    <module>competenceService</module>-->
   </modules>
   <dependencies>
     <dependency>
