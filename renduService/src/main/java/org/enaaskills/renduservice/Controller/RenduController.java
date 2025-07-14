@@ -63,16 +63,28 @@ public class RenduController {
             details.put("rendu", rendu);
 
             if (rendu.getApprenantId() != null) {
-                details.put("apprenantDetails", renduService.getApprenantDetails(rendu.getApprenantId()));
+                Map<String, Object> apprenantDetails = renduService.getApprenantDetails(rendu.getApprenantId());
+                if (apprenantDetails != null && !apprenantDetails.containsKey("error")) {
+                    details.put("apprenantDetails", apprenantDetails);
+                }
             }
             if (rendu.getFormateurId() != null) {
-                details.put("formateurDetails", renduService.getFormateurDetails(rendu.getFormateurId()));
+                Map<String, Object> formateurDetails = renduService.getFormateurDetails(rendu.getFormateurId());
+                if (formateurDetails != null && !formateurDetails.containsKey("error")) {
+                    details.put("formateurDetails", formateurDetails);
+                }
             }
             if (rendu.getCompetenceId() != null) {
-                details.put("competenceDetails", renduService.getCompetenceDetails(rendu.getCompetenceId()));
+                Map<String, Object> competenceDetails = renduService.getCompetenceDetails(rendu.getCompetenceId());
+                if (competenceDetails != null && !competenceDetails.containsKey("error")) {
+                    details.put("competenceDetails", competenceDetails);
+                }
             }
             if (rendu.getValidationId() != null) {
-                details.put("validationDetails", renduService.getValidationDetails(rendu.getValidationId()));
+                Map<String, Object> validationDetails = renduService.getValidationDetails(rendu.getValidationId());
+                if (validationDetails != null && !validationDetails.containsKey("error")) {
+                    details.put("validationDetails", validationDetails);
+                }
             }
             return ResponseEntity.ok(details);
         } else {
