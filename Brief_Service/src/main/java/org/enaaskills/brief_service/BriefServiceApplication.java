@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "org.enaaskills.brief_service.Repository")
+
 public class BriefServiceApplication {
 
     public static void main(String[] args) {
