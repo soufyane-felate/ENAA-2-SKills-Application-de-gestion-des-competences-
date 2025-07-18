@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery.locator:
+        enabled: true
+        lower-case-service-id: true
+      routes:
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+        - id: apprenant-service
+          uri: lb://apprenantService
+          predicates:
+            - Path=/apprenants/**
+          filters:
+            - JwtAuthentication
+        - id: formateur-service
+          uri: lb://formateurService
+          predicates:
+            - Path=/formateurs/**
+          filters:
+            - JwtAuthentication
+        - id: brief-service
+          uri: lb://Brief_Service
+          predicates:
+            - Path=/briefs/**
+          filters:
+            - JwtAuthentication
+        - id: rendu-service
+          uri: lb://renduService
+          predicates:
+            - Path=/rendus/**
+          filters:
+            - JwtAuthentication
+        - id: validation-service
+          uri: lb://validation-service
+          predicates:
+            - Path=/validations/**
+          filters:
+            - JwtAuthentication
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 8081
