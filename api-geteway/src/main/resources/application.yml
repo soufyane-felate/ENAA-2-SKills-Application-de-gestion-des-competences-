@@ -1,0 +1,84 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: apprenants
+          uri: http://apprenentservice
+          predicates:
+            - Path=/apprenants/**
+          filters:
+            - StripPrefix=1
+
+        - id: briefs
+          uri: lb://brief_service
+          predicates:
+            - Path=/briefs/**
+          filters:
+            - StripPrefix=1
+
+        - id: formateur_service
+          uri: http://localhost:8084/
+          predicates:
+            - Path=/formateurs/**
+          filters:
+            - StripPrefix=1
+
+        - id: rendus
+          uri: lb://rendu_service
+          predicates:
+            - Path=/rendus/**
+          filters:
+            - StripPrefix=1
+
+        - id: validations
+          uri: lb://validation_service
+          predicates:
+            - Path=/validations/**
+          filters:
+            - StripPrefix=1
+
+        - id: auth
+          uri: lb://enaaskills
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/enaaskills
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web.reactive.function.client.ExchangeFunctions: TRACE
+    org.springframework.boot.autoconfigure.security.oauth2.resource.reactive: DEBUG
+
+
+
+
