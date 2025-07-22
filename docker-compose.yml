@@ -6,12 +6,38 @@ services:
     container_name: mysql-db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: password
     ports:
       - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - skills-network
+
+  eureka-server:
+    build:
+      context: ./eureka-server
+      args:
+        JAR_FILE: target/eureka-server-0.0.1-SNAPSHOT.jar
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - skills-network
+
+  api-gateway:
+    build:
+      context: ./api-geteway
+      args:
+        JAR_FILE: target/api-gateway-0.0.1-SNAPSHOT.jar
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka-server
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
     networks:
       - skills-network
 
@@ -28,7 +54,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/apprenant_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
       - skills-network
@@ -46,7 +72,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/brief_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
       - skills-network
@@ -64,7 +90,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/formateur_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
       - skills-network
@@ -82,7 +108,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/rendu_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
       - skills-network
@@ -100,7 +126,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/validation_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
       - skills-network

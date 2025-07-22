@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/formateurs")
+//@RequestMapping("/formateurs")
 public class FormateurController {
 
     @Autowired
@@ -48,6 +48,16 @@ public class FormateurController {
         if (formateurService.getFormateurById(id).isPresent()) {
             formateurService.deleteFormateur(id);
             return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}/role")
+    public ResponseEntity<Formateur> updateFormateurRole(@PathVariable Long id, @RequestBody org.enaaskills.formateurservice.Model.Role newRole) {
+        Formateur updatedFormateur = formateurService.updateFormateurRole(id, newRole);
+        if (updatedFormateur != null) {
+            return ResponseEntity.ok(updatedFormateur);
         } else {
             return ResponseEntity.notFound().build();
         }

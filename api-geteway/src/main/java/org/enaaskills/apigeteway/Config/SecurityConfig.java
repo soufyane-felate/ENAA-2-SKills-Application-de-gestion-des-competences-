@@ -14,9 +14,9 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity serverHttpSecurity){
         return serverHttpSecurity.csrf(ServerHttpSecurity.CsrfSpec::disable)
-                .authorizeExchange(exchange->exchange.pathMatchers("/**")
-                        .permitAll()
+                .authorizeExchange(exchange -> exchange
+                        .pathMatchers("/formateurService/**").hasRole("ADMIN")
                         .anyExchange().authenticated()
-                ).oauth2ResourceServer((oauth)->oauth.jwt(Customizer.withDefaults())).build();
+                ).oauth2ResourceServer((oauth) -> oauth.jwt(Customizer.withDefaults())).build();
     }
 }

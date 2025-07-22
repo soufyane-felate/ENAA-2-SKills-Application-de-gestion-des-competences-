@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/apprenants")
 public class ApprenantController {
 
     @Autowired

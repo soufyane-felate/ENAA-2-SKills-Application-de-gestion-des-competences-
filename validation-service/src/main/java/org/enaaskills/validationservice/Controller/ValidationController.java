@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/validations")
+//@RequestMapping("/validations")
 public class ValidationController {
 
     @Autowired

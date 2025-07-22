@@ -16,6 +16,7 @@ public class Apprenant {
     private String lastName;
     private String email;
     private Long renduId;
+    private Role role = Role.APPRENANT;
 
     public Long getId() {
         return id;
@@ -55,6 +56,14 @@ public class Apprenant {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
 }
