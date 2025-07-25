@@ -18,14 +18,14 @@ spring:
           lower-case-service-id: true
       routes:
         - id: apprenants
-          uri: http://apprenentservice
+          uri: http://localhost:8082/
           predicates:
             - Path=/apprenants/**
           filters:
             - StripPrefix=1
 
         - id: briefs
-          uri: lb://brief_service
+          uri: http://localhost:8088/
           predicates:
             - Path=/briefs/**
           filters:
@@ -39,14 +39,14 @@ spring:
             - StripPrefix=1
 
         - id: rendus
-          uri: lb://rendu_service
+          uri: http://localhost:8083/
           predicates:
             - Path=/rendus/**
           filters:
             - StripPrefix=1
 
         - id: validations
-          uri: lb://validation_service
+          uri: http://localhost:8085/
           predicates:
             - Path=/validations/**
           filters:
@@ -78,7 +78,3 @@ logging:
     org.springframework.security: DEBUG
     org.springframework.web.reactive.function.client.ExchangeFunctions: TRACE
     org.springframework.boot.autoconfigure.security.oauth2.resource.reactive: DEBUG
-
-
-
-

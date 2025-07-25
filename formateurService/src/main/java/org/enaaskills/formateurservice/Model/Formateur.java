@@ -13,6 +13,7 @@ public class Formateur {
     private Long id;
     private String nom;
     private String prenom;
+    private Role role = Role.FORMATEUR;
 
     public Formateur() {
     }
@@ -44,5 +45,13 @@ public class Formateur {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

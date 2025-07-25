@@ -19,16 +19,29 @@ public class Rendu {
     private Long competenceId;
     private Long validationId;
 
+    private Long briefId;
+
     public Rendu() {
     }
 
-    public Rendu(Date dateDepot, String lien, Long apprenantId, Long formateurId, Long competenceId, Long validationId) {
+
+    public Rendu(Long id, Date dateDepot, String lien, Long apprenantId, Long formateurId, Long competenceId, Long validationId, Long briefId) {
+        this.id = id;
         this.dateDepot = dateDepot;
         this.lien = lien;
         this.apprenantId = apprenantId;
         this.formateurId = formateurId;
         this.competenceId = competenceId;
         this.validationId = validationId;
+        this.briefId = briefId;
+    }
+
+    public Long getBriefId() {
+        return briefId;
+    }
+
+    public void setBriefId(Long briefId) {
+        this.briefId = briefId;
     }
 
     public Long getId() {

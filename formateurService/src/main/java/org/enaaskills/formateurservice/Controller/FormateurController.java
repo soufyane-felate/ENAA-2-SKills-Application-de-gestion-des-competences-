@@ -51,4 +51,14 @@ public class FormateurController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/{id}/role")
+    public ResponseEntity<Formateur> updateFormateurRole(@PathVariable Long id, @RequestBody org.enaaskills.formateurservice.Model.Role newRole) {
+        Formateur updatedFormateur = formateurService.updateFormateurRole(id, newRole);
+        if (updatedFormateur != null) {
+            return ResponseEntity.ok(updatedFormateur);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

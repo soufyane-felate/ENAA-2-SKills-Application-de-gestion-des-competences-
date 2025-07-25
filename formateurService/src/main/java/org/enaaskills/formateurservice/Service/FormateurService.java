@@ -29,4 +29,14 @@ public class FormateurService {
     public void deleteFormateur(Long id) {
         formateurRepository.deleteById(id);
     }
+
+    public Formateur updateFormateurRole(Long formateurId, org.enaaskills.formateurservice.Model.Role newRole) {
+        java.util.Optional<Formateur> optionalFormateur = formateurRepository.findById(formateurId);
+        if (optionalFormateur.isPresent()) {
+            Formateur formateur = optionalFormateur.get();
+            formateur.setRole(newRole);
+            return formateurRepository.save(formateur);
+        }
+        return null;
+    }
 }
