@@ -15,7 +15,7 @@ pipeline {
         stage('Build with local Maven') {
             steps {
                 bat '''
-                    set "PATH=C:\\maven\\apache-maven-3.8.1-bin\\bin;%PATH%"
+                    set "PATH=C:\\Users\oucht\\Desktop\\apache-maven-3.9.10\\bin;%PATH%"
                     mvn -v
                     mvn clean install
                 '''
